@@ -5,7 +5,8 @@ import MapView from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 
-export default function Map() {
+export default function Map({ data } ) {
+
     const [location, setLocation] = React.useState(null);
     const [errorMsg, setErrorMsg] = React.useState(null);
     const [region, setRegion] = React.useState({
@@ -41,14 +42,6 @@ export default function Map() {
     return (
         <View style={styles.container}>
             <MapView style={styles.map} region={region}>
-                <Marker
-                    coordinate={{
-                        latitude: 51.91633654534601,
-                        longitude: 4.469011288228148,
-                    }}
-                    title={"Pastry Path"}
-                    description={"The best pastry shop in town!"}
-                />
                 {location && (
                     <Marker
                         coordinate={{
@@ -59,6 +52,17 @@ export default function Map() {
                         description={"You are here"}
                     />
                 )}
+                {data && data.map((item, index) => (
+                    <Marker
+                        key={index}
+                        coordinate={{
+                            latitude: item.latitude,
+                            longitude: item.longitude,
+                        }}
+                        title={item.title}
+                        description={item.description}
+                    />
+                ))}
             </MapView>
         </View>
     );

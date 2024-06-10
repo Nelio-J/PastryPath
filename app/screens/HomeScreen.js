@@ -1,9 +1,18 @@
-import * as React from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Image, FlatList, } from 'react-native';
+import * as React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  Image,
+  FlatList,
+  SafeAreaView,
+} from "react-native";
 
 export default function HomeScreen({ navigation, route, data }) {
   const [count, setCount] = React.useState(0);
-  console.log(data);
+  // console.log(data);
 
   React.useEffect(() => {
     if (route.params?.post) {
@@ -22,51 +31,68 @@ export default function HomeScreen({ navigation, route, data }) {
     });
   }, [navigation]);
 
+  const Item = ({ title }) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  );
+
   return (
     // <View style={styles.container}>
     //   <Text style={styles.Text}>RUN!!!!! THEY'RE BEHIND YOUUUUU RUUUUN!!!</Text>
     //   <StatusBar style="auto" />
     // </View>
 
-
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Home Screen</Text>
 
-      <Text>Count: {count}</Text>
+      {/* <Text>Count: {count}</Text> */}
+
+      <FlatList
+        data={data}
+        renderItem={({ item }) => <Item title={item.title} />}
+        keyExtractor={(item) => item.title}
+      />
 
       <Button
         title="Go to Details"
         onPress={() => {
           /* 1. Navigate to the Details route with params */
-          navigation.navigate('Details', {
+          navigation.navigate("Details", {
             itemId: 86,
-            otherParam: 'anything you want here',
+            otherParam: "anything you want here",
           });
         }}
       />
 
       <Button
         title="Go to Data Screen"
-        onPress={() => navigation.navigate('Data', { data })}
+        onPress={() => navigation.navigate("Data", { data })}
       />
 
       <Button
         title="Go to Map Screen"
-        onPress={() => navigation.navigate('Map', { data })}
+        onPress={() => navigation.navigate("Map", { data })}
       />
-
 
       <Button
         title="Create post"
-        onPress={() => navigation.navigate('CreatePost')}
+        onPress={() => navigation.navigate("CreatePost")}
       />
       <Text style={{ margin: 10 }}>Post: {route.params?.post}</Text>
 
       <Button
         title="Update the title"
-        onPress={() => navigation.setOptions({ title: 'Updated!' })}
+        onPress={() => navigation.setOptions({ title: "Updated!" })}
       />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+});

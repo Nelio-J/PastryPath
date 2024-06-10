@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, Button, TextInput, Image, FlatList, } from 'react-native';
 
-export default function DataScreen({ route }) {
-    const { data } = route.params;
+export default function DataScreen({ data }) {
   
     return (
       <View style={{ flex: 1, padding: 20 }}>

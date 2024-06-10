@@ -2,18 +2,20 @@ import * as React from 'react';
 import { StyleSheet, Text, View, Button, TextInput, Image, FlatList, } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Entypo from '@expo/vector-icons/Entypo';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+import { Ionicons } from "@expo/vector-icons";
 
 import { StatusBar } from 'expo-status-bar';
 
-import HomeScreen from './app/components/HomeScreen';
-import DetailsScreen from './app/components/DetailsScreen';
-import CreatePostScreen from './app/components/CreatePostScreen';
-import DataScreen from './app/components/DataScreen';
-import Map from './app/components/MapView';
+import HomeScreen from './app/screens/HomeScreen';
+import DetailsScreen from './app/screens/DetailsScreen';
+import CreatePostScreen from './app/screens/CreatePostScreen';
+import DataScreen from './app/screens/DataScreen';
+import Map from './app/screens/MapView';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -28,6 +30,7 @@ function LogoTitle() {
 }
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [data, setData] = React.useState()
@@ -73,7 +76,7 @@ export default function App() {
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home" mode="modal" screenOptions={{
+        <Tab.Navigator initialRouteName="Home" mode="modal" screenOptions={{
           headerStyle: {
             backgroundColor: '#f4511e',
           },
@@ -81,13 +84,23 @@ export default function App() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
+          tabBarActiveTintColor: 'tomato',
         }}>
-          <Stack.Screen
+          <Tab.Screen
             name="Home"
             options={{
               headerTitle: (props) => <LogoTitle {...props} />,
               // Add a placeholder button without the `onPress` to avoid flicker
               headerRight: () => <Button title="Update count" />,
+              tabBarIcon: (tabInfo) => {
+                return (
+                  <Ionicons
+                    name="home-outline"
+                    size={24}
+                    color={tabInfo.focused ? "red" : "#8e8e93"}
+                  />
+                );
+              },
 
               // headerRight: () => (
               //   <Button
@@ -98,24 +111,27 @@ export default function App() {
               // ),
             }}>
             {(props) => <HomeScreen {...props} data={data} />}
-          </Stack.Screen>
-          <Stack.Screen name="Details" component={DetailsScreen} initialParams={{ itemId: 42 }}
+          </Tab.Screen>
+          {/* <Tab.Screen name="Details" component={DetailsScreen} initialParams={{ itemId: 42 }}
             options={{
               headerBackTitle: 'Custom Back',
               headerBackTitleStyle: { fontSize: 30, },
             }}
-          />
+          /> */}
 
-          <Stack.Screen name="CreatePost" component={CreatePostScreen} />
-          <Stack.Screen name="Data" component={DataScreen} />
-          <Stack.Screen name="Map" component={Map} />
-
+          {/* <Tab.Screen name="CreatePost" component={CreatePostScreen} /> */}
+          <Tab.Screen name="Data">
+            {(props) => <DataScreen {...props} data={data} />}
+          </Tab.Screen>
+          <Tab.Screen name="Map">
+            {(props) => <Map {...props} data={data} />}
+          </Tab.Screen>
           {/* <Stack.Screen
           name="CreatePost"
           component={CreatePostScreen}
           options={({ route }) => ({ title: route.params.name })}
         /> */}
-        </Stack.Navigator>
+        </Tab.Navigator>
       </NavigationContainer>
     </View>
   );
