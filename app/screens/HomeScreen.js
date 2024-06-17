@@ -8,91 +8,60 @@ import {
   Image,
   FlatList,
   SafeAreaView,
+  Pressable,
 } from "react-native";
 
-export default function HomeScreen({ navigation, route, data }) {
-  const [count, setCount] = React.useState(0);
-  // console.log(data);
+import { colors } from "../../config/theme";
+import { ThemeContext } from "../../context/ThemeContext";
 
-  React.useEffect(() => {
-    if (route.params?.post) {
-      // Post updated, do something with `route.params.post`
-      // For example, send the post to the server
-    }
-  }, [route.params?.post]);
+export default function HomeScreen({ navigation, data }) {
+  const { theme } = React.useContext(ThemeContext);
+  const activeColors = colors[theme.mode];
 
-  React.useEffect(() => {
-    // Use `setOptions` to update the button that we previously specified
-    // Now the button includes an `onPress` handler to update the count
-    navigation.setOptions({
-      headerRight: () => (
-        <Button onPress={() => setCount((c) => c + 1)} title="Update count" />
-      ),
-    });
-  }, [navigation]);
-
-  const Item = ({ title }) => (
+  const Item = ({ item }) => (
     <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
+      <Pressable
+        onPress={() => {
+          navigation.navigate("Map", {
+            latitude: item.latitude,
+            longitude: item.longitude,
+          });
+        }}
+      >
+        <Text style={[styles.title, { color: activeColors.text }]}>
+          {item.title}
+        </Text>
+      </Pressable>
+      <Text style={[styles.description, { color: activeColors.text }]}>
+        {item.description}
+      </Text>
     </View>
   );
 
   return (
-    // <View style={styles.container}>
-    //   <Text style={styles.Text}>RUN!!!!! THEY'RE BEHIND YOUUUUU RUUUUN!!!</Text>
-    //   <StatusBar style="auto" />
-    // </View>
-
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home Screen</Text>
-
-      {/* <Text>Count: {count}</Text> */}
-
-      <FlatList
-        data={data}
-        renderItem={({ item }) => <Item title={item.title} />}
-        keyExtractor={(item) => item.title}
-      />
-
-      <Button
-        title="Go to Details"
-        onPress={() => {
-          /* 1. Navigate to the Details route with params */
-          navigation.navigate("Details", {
-            itemId: 86,
-            otherParam: "anything you want here",
-          });
-        }}
-      />
-
-      <Button
-        title="Go to Data Screen"
-        onPress={() => navigation.navigate("Data", { data })}
-      />
-
-      <Button
-        title="Go to Map Screen"
-        onPress={() => navigation.navigate("Map", { data })}
-      />
-
-      <Button
-        title="Create post"
-        onPress={() => navigation.navigate("CreatePost")}
-      />
-      <Text style={{ margin: 10 }}>Post: {route.params?.post}</Text>
-
-      <Button
-        title="Update the title"
-        onPress={() => navigation.setOptions({ title: "Updated!" })}
-      />
+    <View
+      style={[styles.container, { backgroundColor: activeColors.background }]}
+    >
+      <FlatList data={data} renderItem={Item} key={(item) => item.title} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   item: {
     padding: 10,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
     fontSize: 18,
-    height: 44,
+  },
+  description: {
+    fontSize: 14,
   },
 });
