@@ -18,6 +18,8 @@ import * as Location from "expo-location";
 import { colors } from "../../config/theme";
 import { ThemeContext } from "../../context/ThemeContext";
 
+import UserIcon from "../../assets/UserIcon.png";
+
 // import BakkerijHalkImage from "../../assets/bakeries/BakkerijHalk_inside.jpg";
 // import KoekelaImage from "../../assets/bakeries/Koekela_inside.jpg";
 // import StAnnyBakeryImage from "../../assets/bakeries/st-anny-bakery_inside.webp";
@@ -81,10 +83,10 @@ export default function Map({ data, route }) {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
+      let initialLocation = await Location.getCurrentPositionAsync({});
       setRegion({
-        latitude: latitude || location.coords.latitude,
-        longitude: longitude || location.coords.longitude,
+        latitude: latitude || initialLocation.coords.latitude,
+        longitude: longitude || initialLocation.coords.longitude,
         latitudeDelta: 0.005,
         longitudeDelta: 0.005,
       });
@@ -92,16 +94,16 @@ export default function Map({ data, route }) {
       locationSubscription = await Location.watchPositionAsync(
         {
           accuracy: Location.Accuracy.High,
-          timeInterval: 1000,
-          //   distanceInterval: 1,
+          timeInterval: 500,
+          distanceInterval: 1,
         },
         (loc) => {
           setLocation(loc);
-          console.log(loc, typeof loc);
+          console.log("loc location:", loc, typeof loc);
         }
       );
 
-      // console.log(location, typeof location);
+      // console.log("LOCATION:", location, typeof location);
     })();
 
     return () => {
@@ -116,8 +118,8 @@ export default function Map({ data, route }) {
       <MapView
         style={styles.map}
         region={region}
-        showsUserLocation={true}
-        followsUserLocation={true}
+        // showsUserLocation={true}
+        // followsUserLocation={true}
         showsCompass={true}
       >
         {location && (
@@ -128,7 +130,12 @@ export default function Map({ data, route }) {
             }}
             title={"Your Location"}
             description={"You are here"}
-          />
+          >
+            <Image
+              source={require("../../assets/UserIcon.png")}
+              style={{ width: 40, height: 40 }}
+            />
+          </Marker>
         )}
         {data &&
           data.map((item, index) => (
@@ -203,3 +210,4 @@ const styles = StyleSheet.create({
     maxHeight: 150,
   },
 });
+
