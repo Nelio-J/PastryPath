@@ -19,6 +19,7 @@ import { colors } from "../../config/theme";
 import { ThemeContext } from "../../context/ThemeContext";
 
 import UserIcon from "../../assets/UserIcon.png";
+import { bakeryImages } from "../components/BakeryImages";
 
 // import BakkerijHalkImage from "../../assets/bakeries/BakkerijHalk_inside.jpg";
 // import KoekelaImage from "../../assets/bakeries/Koekela_inside.jpg";
@@ -47,19 +48,192 @@ export default function Map({ data, route }) {
   const { theme } = React.useContext(ThemeContext);
   const activeColors = colors[theme.mode];
 
-  const bakeryImages = {
-    "Bakkerij Halk": require("../../assets/bakeries/BakkerijHalk_inside.jpg"),
-    Koekela: require("../../assets/bakeries/Koekela_inside.jpg"),
-    "St. Anny Bakery Rotterdam": require("../../assets/bakeries/st-anny-bakery_inside.webp"),
-    "Bakkerij Arif": require("../../assets/bakeries/BakkerijArif.png"),
-    "Bakker Bart Rotterdam Lijnbaan": require("../../assets/bakeries/BakkerBart_inside.png"),
-    "Jordy's Bakery": require("../../assets/bakeries/JordysBakery_inside.jpg"),
-    "Banketbakkerij van Beek & Specker Meent": require("../../assets/bakeries/BanketbakkerijvanBeekSpeckerMeent_inside.jpeg"),
-    "Banketbakkerij van Beek & Specker Karel Doormanstraat": require("../../assets/bakeries/BanketbakkerijvanBeekSpeckerKarelDoormanstraat_inside.jpeg"),
-    "Vlaamsch Broodhuys Meent": require("../../assets/bakeries/VlaamschBroodhuysMeent.jpg"),
-    "Patisserie de Bijenkorf": require("../../assets/bakeries/DeBijenkorf.jpg"),
-    "Vlaamsch Broodhuys Nieuwe Binnenweg": require("../../assets/bakeries/VlaamschBroodhuysNieuweBinnenweg.jpg"),
-  };
+  const mapStyle = [
+    {
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#212121",
+        },
+      ],
+    },
+    {
+      elementType: "labels.icon",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#757575",
+        },
+      ],
+    },
+    {
+      elementType: "labels.text.stroke",
+      stylers: [
+        {
+          color: "#212121",
+        },
+      ],
+    },
+    {
+      featureType: "administrative",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#757575",
+        },
+      ],
+    },
+    {
+      featureType: "administrative.country",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#9e9e9e",
+        },
+      ],
+    },
+    {
+      featureType: "administrative.land_parcel",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      featureType: "administrative.locality",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#bdbdbd",
+        },
+      ],
+    },
+    {
+      featureType: "poi",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#757575",
+        },
+      ],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#181818",
+        },
+      ],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#616161",
+        },
+      ],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "labels.text.stroke",
+      stylers: [
+        {
+          color: "#1b1b1b",
+        },
+      ],
+    },
+    {
+      featureType: "road",
+      elementType: "geometry.fill",
+      stylers: [
+        {
+          color: "#2c2c2c",
+        },
+      ],
+    },
+    {
+      featureType: "road",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#8a8a8a",
+        },
+      ],
+    },
+    {
+      featureType: "road.arterial",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#373737",
+        },
+      ],
+    },
+    {
+      featureType: "road.highway",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#3c3c3c",
+        },
+      ],
+    },
+    {
+      featureType: "road.highway.controlled_access",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#4e4e4e",
+        },
+      ],
+    },
+    {
+      featureType: "road.local",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#616161",
+        },
+      ],
+    },
+    {
+      featureType: "transit",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#757575",
+        },
+      ],
+    },
+    {
+      featureType: "water",
+      elementType: "geometry",
+      stylers: [
+        {
+          color: "#000000",
+        },
+      ],
+    },
+    {
+      featureType: "water",
+      elementType: "labels.text.fill",
+      stylers: [
+        {
+          color: "#3d3d3d",
+        },
+      ],
+    },
+  ];
 
   React.useEffect(() => {
     let locationSubscription;
@@ -121,6 +295,7 @@ export default function Map({ data, route }) {
         // showsUserLocation={true}
         // followsUserLocation={true}
         showsCompass={true}
+        customMapStyle={theme.mode === "dark" ? mapStyle : []}
       >
         {location && (
           <Marker
@@ -157,13 +332,14 @@ export default function Map({ data, route }) {
                     ]}
                   >
                     <Text style={styles.name}>{item.title}</Text>
-                    <Text>
+                    <Text style={styles.imageContainer}>
                       <Image
                         style={styles.image}
                         source={bakeryImages[item.title]}
-                        resizeMode="contain"
+                        resizeMode="cover"
                       />
                     </Text>
+
                     <Text style={styles.description}>{item.description}</Text>
                   </View>
                   {/* <View style={styles.arrowBorder} />
@@ -193,7 +369,7 @@ const styles = StyleSheet.create({
     borderColor: "red",
     borderWidth: 2,
     padding: 10,
-    width: 300,
+    width: 200,
   },
   name: {
     fontSize: 16,
@@ -201,13 +377,23 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   description: {
-    fontSize: 10,
+    fontSize: 14,
     color: "#fff",
+    padding: 4,
+    textAlign: "center",
+    position: "relative",
+    bottom: 20,
   },
   image: {
     width: 160,
     height: 100,
     maxHeight: 150,
+    marginTop: 10,
+    alignSelf: "center",
+  },
+  imageContainer: {
+    height: 150,
+    position: "relative",
+    bottom: 40,
   },
 });
-

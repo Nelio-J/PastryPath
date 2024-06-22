@@ -126,6 +126,7 @@ export default function RootStack() {
             name="Home"
             options={{
               headerTitle: (props) => <LogoTitle {...props} />,
+              headerTitleAlign: "center",
               tabBarIcon: (tabInfo) => {
                 return (
                   <Ionicons
@@ -165,6 +166,7 @@ export default function RootStack() {
           <Tab.Screen
             name="Map"
             options={{
+              headerTitleAlign: "center",
               tabBarIcon: (tabInfo) => {
                 return (
                   <Ionicons
@@ -186,6 +188,7 @@ export default function RootStack() {
             name="Settings"
             component={SettingsScreen}
             options={{
+              headerTitleAlign: "center",
               tabBarIcon: (tabInfo) => {
                 return (
                   <Ionicons
@@ -224,4 +227,8 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 40,
   },
+  TabHeader: {
+    alignItems: "center",
+    justifyContent: "center"
+  }
 });
