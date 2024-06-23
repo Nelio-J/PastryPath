@@ -4,7 +4,7 @@ import { StyleSheet, View, FlatList } from "react-native";
 import { colors } from "../../config/theme";
 import { ThemeContext } from "../../context/ThemeContext";
 
-import useFavourites from "../components/common/UseFavourites";
+import { useFavourites } from "../components/common/UseFavourites";
 import Item from "../components/common/ListItem";
 
 export default function HomeScreen({ navigation, data }) {

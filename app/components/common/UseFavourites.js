@@ -1,7 +1,7 @@
 import * as React from "react";
 import { storeData, getData } from "../../../config/asyncStorage";
 
-export default function useFavourites() {
+export const useFavourites = () => {
   // State to store the list of favourite bakeries. Uses a Set to make sure every entry is unique
   const [favourites, setFavourites] = React.useState(new Set());
 
