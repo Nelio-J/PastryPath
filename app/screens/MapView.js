@@ -1,263 +1,50 @@
 import * as React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TextInput,
-  Image,
-  FlatList,
-  Platform,
-} from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 
 import MapView from "react-native-maps";
-import { Marker } from "react-native-maps";
-import { Callout } from "react-native-maps";
 import * as Location from "expo-location";
 
 import { colors } from "../../config/theme";
 import { ThemeContext } from "../../context/ThemeContext";
 
-import UserIcon from "../../assets/UserIcon.png";
-import { bakeryImages } from "../components/BakeryImages";
+import { LocationMarker } from "../components/Markers/LocationMarker";
+import { BakeryMarker } from "../components/Markers/BakeryMarker";
 
-// import BakkerijHalkImage from "../../assets/bakeries/BakkerijHalk_inside.jpg";
-// import KoekelaImage from "../../assets/bakeries/Koekela_inside.jpg";
-// import StAnnyBakeryImage from "../../assets/bakeries/st-anny-bakery_inside.webp";
-// import BakkerijArifImage from "../../assets/bakeries/BakkerijArif.png";
-// import BakkerijBartImage from "../../assets/bakeries/BakkerBart_inside.png";
-// import JordysBakeryImage from "../../assets/bakeries/JordysBakery_inside.jpg";
-// import BanketbakkerijvanBeekSpeckerMeentImage from "../../assets/bakeries/BanketbakkerijvanBeekSpeckerMeent_inside.jpeg";
-// import BanketbakkerijvanBeekSpeckerKarelDoormanstraatImage from "../../assets/bakeries/BanketbakkerijvanBeekSpeckerKarelDoormanstraat_inside.jpeg";
-// import VlaamschBroodhuysMeentImage from "../../assets/bakeries/VlaamschBroodhuysMeent.jpg";
-// import DeBijenkorfImage from "../../assets/bakeries/DeBijenkorf.jpg";
-// import VlaamschBroodhuysNieuweBinnenwegImage from "../../assets/bakeries/VlaamschBroodhuysNieuweBinnenweg.jpg";
+import { mapStyle } from "../components/MapStyle";
 
 export default function Map({ data, route }) {
-  const [location, setLocation] = React.useState(null);
-  const [errorMsg, setErrorMsg] = React.useState(null);
+  const [location, setLocation] = React.useState(null); // State to hold the user's current location
+  const [errorMsg, setErrorMsg] = React.useState(null); // State to manage the map region
   const [region, setRegion] = React.useState({
     latitude: 51.91968,
     longitude: 4.464831,
     latitudeDelta: 0.005,
     longitudeDelta: 0.005,
   });
+
+  // Checks if route.params exists and is not null or undefined. If not, it latitude/longitude will be 'undefined', but the rest of the code still works.
   const latitude = route.params?.latitude;
   const longitude = route.params?.longitude;
 
+  // Access ThemeContext for dynamic light/dark mode configuration
   const { theme } = React.useContext(ThemeContext);
   const activeColors = colors[theme.mode];
-
-  const mapStyle = [
-    {
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#212121",
-        },
-      ],
-    },
-    {
-      elementType: "labels.icon",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      elementType: "labels.text.stroke",
-      stylers: [
-        {
-          color: "#212121",
-        },
-      ],
-    },
-    {
-      featureType: "administrative",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      featureType: "administrative.country",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#9e9e9e",
-        },
-      ],
-    },
-    {
-      featureType: "administrative.land_parcel",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "administrative.locality",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#bdbdbd",
-        },
-      ],
-    },
-    {
-      featureType: "poi",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#181818",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#616161",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "labels.text.stroke",
-      stylers: [
-        {
-          color: "#1b1b1b",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          color: "#2c2c2c",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#8a8a8a",
-        },
-      ],
-    },
-    {
-      featureType: "road.arterial",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#373737",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#3c3c3c",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway.controlled_access",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#4e4e4e",
-        },
-      ],
-    },
-    {
-      featureType: "road.local",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#616161",
-        },
-      ],
-    },
-    {
-      featureType: "transit",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#757575",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#000000",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#3d3d3d",
-        },
-      ],
-    },
-  ];
 
   React.useEffect(() => {
     let locationSubscription;
 
-    // Image.prefetch(bakeryImages["Bakkerij Halk"]);
-    // Image.prefetch(bakeryImages["Koekela"]);
-    // Image.prefetch(bakeryImages["St. Anny Bakery Rotterdam"]);
-    // Image.prefetch(bakeryImages["Bakkerij Arif"]);
-    // Image.prefetch(bakeryImages["Bakker Bart Rotterdam Lijnbaan"]);
-    // Image.prefetch(bakeryImages["Jordy's Bakery"]);
-    // Image.prefetch(bakeryImages["Banketbakkerij van Beek & Specker Meent"]);
-    // Image.prefetch(bakeryImages["Banketbakkerij van Beek & Specker Karel Doormanstraat"]);
-    // Image.prefetch(bakeryImages["Vlaamsch Broodhuys Meent"]);
-    // Image.prefetch(bakeryImages["Patisserie de Bijenkorf"]);
-    // Image.prefetch(bakeryImages["Vlaamsch Broodhuys Nieuwe Binnenweg"]);
-
     (async () => {
+      // Request the user for permission to access their location
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
       }
 
+      // Get the user's current location
       let initialLocation = await Location.getCurrentPositionAsync({});
+
+      // Set the initial map region based on user's coords or passed latitude and longitude (passed along from the home screen)
       setRegion({
         latitude: latitude || initialLocation.coords.latitude,
         longitude: longitude || initialLocation.coords.longitude,
@@ -265,6 +52,7 @@ export default function Map({ data, route }) {
         longitudeDelta: 0.005,
       });
 
+      // Track the user's live location and update it when the user's location changes
       locationSubscription = await Location.watchPositionAsync(
         {
           accuracy: Location.Accuracy.High,
@@ -273,81 +61,32 @@ export default function Map({ data, route }) {
         },
         (loc) => {
           setLocation(loc);
-          console.log("loc location:", loc, typeof loc);
+          // console.log("loc location:", loc, typeof loc);
         }
       );
-
-      // console.log("LOCATION:", location, typeof location);
     })();
 
     return () => {
       if (locationSubscription) {
-        locationSubscription.remove();
+        locationSubscription.remove(); // Clean up the live location subscription when the location update is finished
       }
     };
-  }, [latitude, longitude]);
+  }, [latitude, longitude]); //O
 
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
-        region={region}
-        // showsUserLocation={true}
-        // followsUserLocation={true}
-        showsCompass={true}
-        customMapStyle={theme.mode === "dark" ? mapStyle : []}
+        region={region} // Setting the current region for the map view
+        showsCompass={true} // Showing a compass on the map
+        customMapStyle={theme.mode === "dark" ? mapStyle : []} // Applying custom map style based on the current theme
       >
-        {location && (
-          <Marker
-            coordinate={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-            }}
-            title={"Your Location"}
-            description={"You are here"}
-          >
-            <Image
-              source={require("../../assets/UserIcon.png")}
-              style={{ width: 40, height: 40 }}
-            />
-          </Marker>
-        )}
-        {data &&
-          data.map((item, index) => (
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: item.latitude,
-                longitude: item.longitude,
-              }}
-              title={item.title}
-              description={item.description}
-            >
-              <Callout tooltip={true}>
-                <View>
-                  <View
-                    style={[
-                      styles.bubble,
-                      { backgroundColor: activeColors.primary },
-                    ]}
-                  >
-                    <Text style={styles.name}>{item.title}</Text>
-                    <Text style={styles.imageContainer}>
-                      <Image
-                        style={styles.image}
-                        source={bakeryImages[item.title]}
-                        resizeMode="cover"
-                      />
-                    </Text>
+        {/* Render the user's location marker */}
+        {location && <LocationMarker locationData={location} />}
 
-                    <Text style={styles.description}>{item.description}</Text>
-                  </View>
-                  {/* <View style={styles.arrowBorder} />
-                  <View style={styles.arrow} /> */}
-                </View>
-              </Callout>
-            </Marker>
-          ))}
+        {/* Render a marker for each bakery location from the fetched data*/}
+        {data &&
+          data.map((item, index) => <BakeryMarker key={index} item={item} />)}
       </MapView>
     </View>
   );
@@ -362,38 +101,5 @@ const styles = StyleSheet.create({
   map: {
     width: "100%",
     height: "100%",
-  },
-  bubble: {
-    alignItems: "center",
-    borderRadius: 6,
-    borderColor: "red",
-    borderWidth: 2,
-    padding: 10,
-    width: 200,
-  },
-  name: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#fff",
-  },
-  description: {
-    fontSize: 14,
-    color: "#fff",
-    padding: 4,
-    textAlign: "center",
-    position: "relative",
-    bottom: 20,
-  },
-  image: {
-    width: 160,
-    height: 100,
-    maxHeight: 150,
-    marginTop: 10,
-    alignSelf: "center",
-  },
-  imageContainer: {
-    height: 150,
-    position: "relative",
-    bottom: 40,
   },
 });

@@ -1,4 +1,4 @@
-const bakeryImages = {
+export const bakeryImages = {
   "Bakkerij Halk": require("../../assets/bakeries/BakkerijHalk_inside.jpg"),
   Koekela: require("../../assets/bakeries/Koekela_inside.jpg"),
   "St. Anny Bakery Rotterdam": require("../../assets/bakeries/st-anny-bakery_inside.webp"),
@@ -11,5 +11,3 @@ const bakeryImages = {
   "Patisserie de Bijenkorf": require("../../assets/bakeries/DeBijenkorf.jpg"),
   "Vlaamsch Broodhuys Nieuwe Binnenweg": require("../../assets/bakeries/VlaamschBroodhuysNieuweBinnenweg.jpg"),
 };
-
-export { bakeryImages };
