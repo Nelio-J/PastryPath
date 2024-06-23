@@ -6,10 +6,10 @@ import Entypo from "@expo/vector-icons/Entypo";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 
-import { colors } from "../../config/theme";
-import { ThemeContext } from "../../context/ThemeContext";
+import { colors } from "../../../config/theme";
+import { ThemeContext } from "../../../context/ThemeContext";
 
-import { fetchStoredTheme } from "./FetchStoredTheme";
+import { fetchStoredTheme } from "../FetchStoredTheme";
 import TabNavigator from "./TabNavigator";
 
 // Keep the splash screen visible while we fetch resources

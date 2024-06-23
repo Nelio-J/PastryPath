@@ -2,13 +2,13 @@ import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
-import HomeScreen from "../screens/HomeScreen";
-import Map from "../screens/MapView";
-import SettingsScreen from "../screens/SettingsScreen";
+import HomeScreen from "../../screens/HomeScreen";
+import Map from "../../screens/MapView";
+import SettingsScreen from "../../screens/SettingsScreen";
 
-import LogoTitle from "./LogoTitle";
-import { ThemeContext } from "../../context/ThemeContext";
-import { colors } from "../../config/theme";
+import LogoTitle from "../LogoTitle";
+import { ThemeContext } from "../../../context/ThemeContext";
+import { colors } from "../../../config/theme";
 
 const Tab = createBottomTabNavigator();
 

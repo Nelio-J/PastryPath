@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import RootStack from "./app/components/RootStack";
+import RootStack from "./app/components/navigation/RootStack";
 import ThemeProvider from "./context/ThemeProvider";
 
 export default function App() {

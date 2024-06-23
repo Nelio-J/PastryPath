@@ -10,7 +10,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { LocationMarker } from "../components/Markers/LocationMarker";
 import { BakeryMarker } from "../components/Markers/BakeryMarker";
 
-import { mapStyle } from "../components/MapStyle";
+import { mapStyle } from "../components/map/MapStyle";
 
 export default function Map({ data, route }) {
   const [location, setLocation] = React.useState(null); // State to hold the user's current location
