@@ -71,7 +71,7 @@ export default function Map({ data, route }) {
         locationSubscription.remove(); // Clean up the live location subscription when the location update is finished
       }
     };
-  }, [latitude, longitude]); //O
+  }, [latitude, longitude]);
 
   return (
     <View style={styles.container}>
