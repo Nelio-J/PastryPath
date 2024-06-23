@@ -1,8 +1,8 @@
 import * as React from "react";
 import { StyleSheet, Pressable } from "react-native";
 
-import { colors } from "../../config/theme";
-import { ThemeContext } from "../../context/ThemeContext";
+import { colors } from "../../../config/theme";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 import { Feather } from "@expo/vector-icons";
 

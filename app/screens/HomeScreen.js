@@ -4,8 +4,8 @@ import { StyleSheet, View, FlatList } from "react-native";
 import { colors } from "../../config/theme";
 import { ThemeContext } from "../../context/ThemeContext";
 
-import useFavourites from "../components/UseFavourites";
-import Item from "../components/ListItem";
+import useFavourites from "../components/common/UseFavourites";
+import Item from "../components/common/ListItem";
 
 export default function HomeScreen({ navigation, data }) {
   // Access ThemeContext for dynamic light/dark mode configuration

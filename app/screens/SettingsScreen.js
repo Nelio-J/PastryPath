@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../../config/theme";
 import { ThemeContext } from "../../context/ThemeContext";
 
-import { ThemeToggleButton } from "../components/ThemeToggleButton";
+import { ThemeToggleButton } from "../components/common/ThemeToggleButton";
 
 export default function SettingsScreen({}) {
   // Access ThemeContext for dynamic light/dark mode configuration

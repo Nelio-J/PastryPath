@@ -4,10 +4,10 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import { Marker } from "react-native-maps";
 import { Callout } from "react-native-maps";
 
-import { colors } from "../../../config/theme";
-import { ThemeContext } from "../../../context/ThemeContext";
+import { colors } from "../../../../config/theme";
+import { ThemeContext } from "../../../../context/ThemeContext";
 
-import { bakeryImages } from "../../components/BakeryImages";
+import { bakeryImages } from "../../common/BakeryImages";
 
 export const BakeryMarker = ({ item }) => {
   // Access ThemeContext for dynamic light/dark mode configuration

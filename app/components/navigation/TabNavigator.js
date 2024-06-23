@@ -6,7 +6,7 @@ import HomeScreen from "../../screens/HomeScreen";
 import Map from "../../screens/MapView";
 import SettingsScreen from "../../screens/SettingsScreen";
 
-import LogoTitle from "../LogoTitle";
+import LogoTitle from "../common/LogoTitle";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { colors } from "../../../config/theme";
 

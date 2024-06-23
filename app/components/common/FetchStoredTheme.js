@@ -1,4 +1,4 @@
-import { getData } from "../../config/asyncStorage";
+import { getData } from "../../../config/asyncStorage";
 
 export const fetchStoredTheme = async (updateTheme) => {
     try {

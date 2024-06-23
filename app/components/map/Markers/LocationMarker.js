@@ -16,7 +16,7 @@ export const LocationMarker = ({ locationData }) => {
 
       {/* Add a custom marker for the user's location */}
       <Image
-        source={require("../../../assets/UserIcon.png")}
+        source={require("../../../../assets/UserIcon.png")}
         style={{ width: 40, height: 40 }}
       />
     </Marker>

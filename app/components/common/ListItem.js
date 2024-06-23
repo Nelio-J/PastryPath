@@ -1,11 +1,11 @@
 import * as React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 
-import { colors } from "../../config/theme";
-import { ThemeContext } from "../../context/ThemeContext";
+import { colors } from "../../../config/theme";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 import { MaterialIcons } from "@expo/vector-icons";
-import { bakeryImages } from "../components/BakeryImages";
+import { bakeryImages } from "../common/BakeryImages";
 
 const Item = ({ item, navigation, addToFavourites, favourites }) => {
   // Access ThemeContext for dynamic light/dark mode configuration

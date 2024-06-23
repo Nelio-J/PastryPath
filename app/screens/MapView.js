@@ -7,8 +7,8 @@ import * as Location from "expo-location";
 import { colors } from "../../config/theme";
 import { ThemeContext } from "../../context/ThemeContext";
 
-import { LocationMarker } from "../components/Markers/LocationMarker";
-import { BakeryMarker } from "../components/Markers/BakeryMarker";
+import { LocationMarker } from "../components/map/Markers/LocationMarker";
+import { BakeryMarker } from "../components/map/Markers/BakeryMarker";
 
 import { mapStyle } from "../components/map/MapStyle";
 

@@ -9,7 +9,7 @@ import * as Font from "expo-font";
 import { colors } from "../../../config/theme";
 import { ThemeContext } from "../../../context/ThemeContext";
 
-import { fetchStoredTheme } from "../FetchStoredTheme";
+import { fetchStoredTheme } from "../common/FetchStoredTheme"
 import TabNavigator from "./TabNavigator";
 
 // Keep the splash screen visible while we fetch resources
