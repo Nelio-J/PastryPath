@@ -1,7 +1,7 @@
 
 <h1 align=center>
   <br>
-  <a href="https://github.com/Nelio-J/PastryPath"><img src="https://www.pngmart.com/files/2/Pokeball-PNG-Image.png" alt="Pastry Path Logo" width="200"></a>
+  <a href="https://github.com/Nelio-J/PastryPath"><img src="https://github.com/Nelio-J/PastryPath/blob/master/assets/PastryPath.png" alt="Pastry Path Logo" width="200"></a>
   <br>
   Pastry Path: Find Bakeries in Rotterdam
   <br>
