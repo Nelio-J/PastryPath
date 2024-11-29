@@ -7,7 +7,7 @@
   <br>
 </h1>
 
-<h4 align="center">An app built on top of <a href="https://openai.com/" target="_blank">React Native</a> to show and store your favourite bakeries in Rotterdam. .</h4>
+<h4 align="center">An app built on top of <a href="https://reactnative.dev/" target="_blank">React Native</a> to show and store your favourite bakeries in Rotterdam. .</h4>
 
 <p align=center>
   <a href="#key-features">Key Features</a> •
