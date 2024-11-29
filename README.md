@@ -26,6 +26,8 @@
   - A list of all bakeries is displayed on the home menu. By clicking on the heart, you can store all your favourite bakeries to your local storage.
 * Remembers your preferences even when restarting the app
   - By storing and retrieving from the local storage, Pastry Path remembers your favourite bakeries and which theme you were using.
+ 
+## Credits
 
 This software uses the following open source packages:
 
